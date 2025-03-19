@@ -5,8 +5,9 @@ import time
 import tkinter as tk
 
 # Load CSV with LinkedIn URLs
-df = pd.read_csv("../data/temp_data.csv")
-df["outreach_decision"] = ""
+df = pd.read_csv("../data/non_outreached.csv")
+df = df[:3] # Testing: first three
+df["organic_social_outreached"] = ""
 df["outreach_note"] = ""
 
 # Initialize current index
@@ -25,7 +26,7 @@ def close_browser_tab():
 def user_decision(decision, note_entry, root):
     """Stores decision, saves outreach note, and moves to the next profile."""
     global current_index
-    df.at[current_index, "outreach_decision"] = decision
+    df.at[current_index, "organic_social_outreached"] = decision
     df.at[current_index, "outreach_note"] = note_entry.get()  # Save note
 
     root.destroy()
@@ -55,7 +56,8 @@ def show_ui(url):
     # Header
     first_name = df.iloc[current_index]["firstname"]
     last_name = df.iloc[current_index]["lastname"]
-    label = tk.Label(root, text=f"Outreach to {first_name} {last_name}?", font=("Arial", 12))
+    post_name = df.iloc[current_index]["post_name"]
+    label = tk.Label(root, text=f"Outreach to {first_name} {last_name}? (from: {post_name})", font=("Arial", 12))
     label.pack(pady=10)
 
     # Note entry box
@@ -84,13 +86,13 @@ def show_ui(url):
 def next_profile():
     global current_index
     if current_index < len(df):
-        url = df.iloc[current_index]["linkedin_profile_url_organic_social_pipeline"]
+        url = df.iloc[current_index]["hs_linkedin_url"]
         open_linkedin_profile(url)
         show_ui(url)
     else:
         print("All profiles reviewed!")
-        outreach_df = df[["vid", "firstname", "lastname", "outreach_decision", "outreach_note"]]
-        outreach_df.to_csv("../output/linkedin_outreach_results.csv", index=False)
+        outreach_df = df[["vid", "firstname", "lastname", "organic_social_outreached", "outreach_note"]]
+        outreach_df.to_csv("../data/linkedin_outreach_results.csv", index=False)
 
 # Start Process
 next_profile()
