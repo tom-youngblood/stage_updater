@@ -4,6 +4,7 @@
 The **Stage Updater** is a Python-based pipeline for automating the process of updating lead stages in HubSpot. It pulls data, processes it, and pushes the updates back to HubSpot. The automation ensures efficient tracking of outreach efforts, reducing manual updates and improving data integrity.
 
 ## File Structure
+```
 stage_updater/
 │── data/
 │   ├── data.csv
@@ -25,6 +26,7 @@ stage_updater/
 │   ├── stage_updater_flow.jpeg
 │
 │── .gitignore
+```
 
 ## Workflow
 The Stage Updater follows a structured pipeline:
@@ -36,7 +38,7 @@ The Stage Updater follows a structured pipeline:
 ### Flowchart
 Below is a visual representation of the process:
 
-![Stage Updater Workflow](media/stage_updater_flow.jpeg)
+![Stage Updater Workflow](media/stage_updater_flow.png)
 
 ## Script Descriptions
 
