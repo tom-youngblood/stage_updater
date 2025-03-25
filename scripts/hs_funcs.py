@@ -38,34 +38,18 @@ class HS:
 
         return contacts
 
-    def parse_hubspot_contacts(response):
+    def parse_hubspot_contacts(response, properties):
         """
         Extracts vid and all properties from a list of HubSpot contacts (v1 API).
         """
         contacts_list = []
-
-        all_properties = [
-            "firstname",
-            "lastname",
-            "email",
-            "company",
-            "createdate",
-            "organic_social_stage",
-            "organic_social_outreached",
-            "linkedin_profile_url_organic_social_pipeline",
-            "latest_funding_date",
-            "latest_funding_stage",
-            "total_funding",
-            "post_id",
-            "post"
-        ]
 
         for contact in response:
             parsed_data = {"vid": contact.get("vid")}  # Extract vid
 
             # Extract all requested properties, setting None if missing
             if "properties" in contact:
-                for prop in all_properties:
+                for prop in properties:
                     if prop in contact["properties"]:
                         parsed_data[prop] = contact["properties"][prop].get("value")
                     else:
